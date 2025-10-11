@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, nixpkgs-unstable, ... }:
 
 {
   imports =
@@ -6,11 +6,10 @@
       ./hardware-configuration.nix
     ];
 
+  #boot.loader.systemd-boot.enable = true;
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/vda";
-  networking.hostName = "nixos";
   networking.networkmanager.enable = true;
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   time.timeZone = "Europe/Zagreb";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -47,15 +46,45 @@
     alacritty
     wget
     htop
+    wlogout
+    hyprlock
+    dunst
+    pipewire
+    wireplumber
+    nerd-fonts.jetbrains-mono
   ];
 
+  services.pulseaudio.enable = false;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
+  services.pipewire.wireplumber.enable = true;
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+  };
+
   programs.hyprland.enable = true;
-  services.greetd.enable = true;
-  services.greetd.settings = {
-    default_session = {
-      command = "${pkgs.hyprland}/bin/Hyprland";
-      user = "marko";
+
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        user = "marko";
+	command = "${pkgs.hyprland}/bin/Hyprland";
+      };
     };
+  };
+
+  catppuccin = {
+    enable = true;
+    accent = "green";
+    flavor = "macchiato";
   };
 
   security.sudo.enable = true;
