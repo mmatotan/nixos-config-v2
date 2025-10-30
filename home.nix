@@ -1,6 +1,11 @@
 { config, pkgs, ...}:
 
 {
+
+  imports = [
+    ./home/neovim/default.nix
+  ];
+
   home.username = "marko";
   home.homeDirectory = "/home/marko";
   home.stateVersion = "25.05";
@@ -31,6 +36,7 @@
     hyprlock.enable = true;
     alacritty.enable = true;
     waybar.enable = true;
+    nvim.enable = true;
   };
 
   programs.git = {
@@ -40,17 +46,6 @@
     extraConfig = {
       init.defaultBranch = "master";
     };
-  };
-
-  programs.neovim = {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
-    defaultEditor = true;
-    extraPackages = [
-      pkgs.ripgrep
-      pkgs.cargo
-    ];
   };
 
   wayland.windowManager.hyprland = {
