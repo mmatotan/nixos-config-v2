@@ -6,7 +6,7 @@
   home.stateVersion = "25.05";
 
   home.pointerCursor = {
-    name = "Catppuccin-Macchiato-Green";
+    name = "catppuccin-macchiato-green-cursors";
     package = pkgs.catppuccin-cursors.macchiatoGreen;
     size = 32;
     hyprcursor = {
@@ -16,9 +16,12 @@
   };
 
   programs.wlogout.enable = true;
-  programs.hyprlock.enable = true;
   programs.alacritty.enable = true;
   programs.waybar.enable = true;
+  programs.rofi.enable = true;
+  programs.hyprlock.enable = true;
+  programs.bash.enable = true;
+  programs.wofi.enable = true;
 
   catppuccin = {
     enable = true;
@@ -30,14 +33,6 @@
     waybar.enable = true;
   };
 
-  programs.bash = {
-    enable = true;
-  };
-
-  programs.wofi = {
-    enable = true;
-  };
-
   programs.git = {
     enable = true;
     userName = "mmatotan";
@@ -47,13 +42,24 @@
     };
   };
 
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+    defaultEditor = true;
+    extraPackages = [
+      pkgs.ripgrep
+      pkgs.cargo
+    ];
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
       env = [
-      	"HYPRCURSOR_THEME,Catppuccin-Macchiato-Green"
+      	"HYPRCURSOR_THEME,catppuccin-macchiato-green-cursors"
       	"HYPRCURSOR_SIZE,24"
-      	"XCURSOR_THEME,Catppuccin-Macchiato-Green"
+      	"XCURSOR_THEME,catppuccin-macchiato-green-cursors"
       	"XCURSOR_SIZE,24"
       ];
 
@@ -75,12 +81,15 @@
         follow_mouse = "0";
         mouse_refocus = "false";
         accel_profile = "flat";
+        repeat_delay = 300;
+        repeat_rate = 50;
       };
       bind =
         [
           "$mod, Return, exec, alacritty"
           "$mod SHIFT, Return, exec, firefox"
           "$mod SHIFT, e, exec, wlogout"
+          "$mod SHIFT, l, exec, hyprlock"
 	  "$mod, q, killactive"
 	  "$mod, f, fullscreen"
         ]

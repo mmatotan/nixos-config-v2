@@ -40,7 +40,6 @@
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   environment.systemPackages = with pkgs; [
-    neovim
     firefox
     hyprpaper
     alacritty
@@ -49,8 +48,16 @@
     wlogout
     hyprlock
     dunst
+    rofi
     pipewire
     wireplumber
+    gcc
+    gnumake
+    ranger
+    nodejs
+  ];
+
+  fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
   ];
 
