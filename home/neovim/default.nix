@@ -1,9 +1,13 @@
+{ pkgs, ... }:
+
 let
   fromGitHub = import ../functions/fromGitHub.nix;
 in
 
 {
   imports = [
+    ./keymaps.nix
+    ./options.nix
     ./ranger.nix
   ];
 
