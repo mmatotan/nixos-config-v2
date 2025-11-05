@@ -5,6 +5,7 @@
     ./home/neovim/default.nix
     ./home/git.nix
     ./home/alacritty.nix
+    ./home/hyprlock.nix
   ];
 
   home.username = "marko";
@@ -24,7 +25,6 @@
   programs.wlogout.enable = true;
   programs.waybar.enable = true;
   programs.rofi.enable = true;
-  programs.hyprlock.enable = true;
   programs.bash.enable = true;
   programs.wofi.enable = true;
   programs.firefox.enable = true;
@@ -36,8 +36,8 @@
   services.hyprpaper = {
     enable = true;
     settings = {
-      preload = [ "${./wallpapers/building.jpeg}" ];
-      wallpaper = [ ",${./wallpapers/building.jpeg}" ];
+      preload = [ "${./home/wallpapers/building.jpeg}" ];
+      wallpaper = [ ",${./home/wallpapers/building.jpeg}" ];
       splash = false;
       ipc = false;
     };
@@ -68,7 +68,9 @@
       general = {
         gaps_in = "8";
         gaps_out = "16";
-        border_size = "4";
+        border_size = "2";
+        "col.active_border" = "0xc8c093ee";
+        "col.inactive_border" = "0xee2d4f67";
       };
       input = {
         follow_mouse = "0";
@@ -81,14 +83,17 @@
         [
           "$mod, Return, exec, alacritty"
           "$mod SHIFT, Return, exec, firefox"
-          "$mod SHIFT, e, exec, wlogout"
-          "$mod SHIFT, l, exec, hyprlock"
+          "$mod SHIFT, e, exec, hyprlock"
 	        "$mod, q, killactive"
 	        "$mod, f, fullscreen"
           "$mod, h, movefocus, l"
           "$mod, l, movefocus, r"
           "$mod, k, movefocus, u"
           "$mod, j, movefocus, d"
+          "$mod SHIFT, h, movewindow, l"
+          "$mod SHIFT, l, movewindow, r"
+          "$mod SHIFT, k, movewindow, u"
+          "$mod SHIFT, j, movewindow, d"
         ]
         ++ (
           builtins.concatLists (builtins.genList (i:
