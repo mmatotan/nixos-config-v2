@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, nixpkgs-unstable, ... }:
 
 let
   fromGitHub = import ../functions/fromGitHub.nix;
@@ -9,6 +9,13 @@ in
     ./keymaps.nix
     ./options.nix
     ./ranger.nix
+    ./telescope.nix
+    ./treesitter.nix
+    ./git.nix
+    ./lualine.nix
+    ./lsp.nix
+    ./harpoon.nix
+    ./theme.nix
   ];
 
   programs.neovim = {
@@ -19,6 +26,9 @@ in
     extraPackages = [
       pkgs.ripgrep
       pkgs.cargo
+      pkgs.nil
+    ];
+    plugins = with pkgs.vimPlugins; [
     ];
   };
 }

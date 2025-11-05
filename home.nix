@@ -1,8 +1,10 @@
-{ config, pkgs, ...}:
+{ config, pkgs, nixpkgs-unstable, ...}:
 
 {
   imports = [
     ./home/neovim/default.nix
+    ./home/git.nix
+    ./home/alacritty.nix
   ];
 
   home.username = "marko";
@@ -10,8 +12,8 @@
   home.stateVersion = "25.05";
 
   home.pointerCursor = {
-    name = "catppuccin-macchiato-green-cursors";
-    package = pkgs.catppuccin-cursors.macchiatoGreen;
+    name = "phinger-cursors-dark";
+    package = pkgs.phinger-cursors;
     size = 32;
     hyprcursor = {
       enable = true;
@@ -20,30 +22,24 @@
   };
 
   programs.wlogout.enable = true;
-  programs.alacritty.enable = true;
   programs.waybar.enable = true;
   programs.rofi.enable = true;
   programs.hyprlock.enable = true;
   programs.bash.enable = true;
   programs.wofi.enable = true;
+  programs.firefox.enable = true;
 
-  catppuccin = {
+  programs.ranger = {
     enable = true;
-    accent = "green";
-    flavor = "macchiato";
-    wlogout.enable = true;
-    hyprlock.enable = true;
-    alacritty.enable = true;
-    waybar.enable = true;
-    nvim.enable = true;
   };
 
-  programs.git = {
+  services.hyprpaper = {
     enable = true;
-    userName = "mmatotan";
-    userEmail = "mrkanic@gmail.com";
-    extraConfig = {
-      init.defaultBranch = "master";
+    settings = {
+      preload = [ "${./wallpapers/building.jpeg}" ];
+      wallpaper = [ ",${./wallpapers/building.jpeg}" ];
+      splash = false;
+      ipc = false;
     };
   };
 
@@ -51,9 +47,9 @@
     enable = true;
     settings = {
       env = [
-      	"HYPRCURSOR_THEME,catppuccin-macchiato-green-cursors"
+      	"HYPRCURSOR_THEME,phinger-cursors-dark"
       	"HYPRCURSOR_SIZE,24"
-      	"XCURSOR_THEME,catppuccin-macchiato-green-cursors"
+      	"XCURSOR_THEME,phinger-cursors-dark"
       	"XCURSOR_SIZE,24"
       ];
 
@@ -63,8 +59,11 @@
 
       monitor = "main, 1920x1080@60.00HHz, 0x0, 1";
       decoration = {
-        rounding = "4";
-        inactive_opacity = "0.8";
+        blur = {
+          size = 1;
+        };
+        #rounding = "4";
+        inactive_opacity = "0.6";
       };
       general = {
         gaps_in = "8";
@@ -84,8 +83,12 @@
           "$mod SHIFT, Return, exec, firefox"
           "$mod SHIFT, e, exec, wlogout"
           "$mod SHIFT, l, exec, hyprlock"
-	  "$mod, q, killactive"
-	  "$mod, f, fullscreen"
+	        "$mod, q, killactive"
+	        "$mod, f, fullscreen"
+          "$mod, h, movefocus, l"
+          "$mod, l, movefocus, r"
+          "$mod, k, movefocus, u"
+          "$mod, j, movefocus, d"
         ]
         ++ (
           builtins.concatLists (builtins.genList (i:

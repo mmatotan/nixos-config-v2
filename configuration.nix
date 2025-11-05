@@ -53,8 +53,11 @@
     wireplumber
     gcc
     gnumake
+    highlight
+    file
     ranger
     nodejs
+    wl-clipboard
   ];
 
   fonts.packages = with pkgs; [
@@ -86,12 +89,6 @@
 	command = "${pkgs.hyprland}/bin/Hyprland";
       };
     };
-  };
-
-  catppuccin = {
-    enable = true;
-    accent = "green";
-    flavor = "macchiato";
   };
 
   security.sudo.enable = true;
