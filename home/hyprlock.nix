@@ -34,7 +34,7 @@
         {
           monitor = "";
           text = "cmd[update:1000] echo -e \"$(date +\"%H\")\"";
-          color = "rgba(101, 133, 148, 1)";
+          color = "rgba(192, 147, 238, 1)";
           font_family = "Mononoki Nerd Font Mono";
           font_size = 140;
           position = "0, 240";
@@ -53,7 +53,7 @@
          }
         {
           monitor = "";
-          text = "cmd[update:1000] echo \"<span color='##c5c9c700'>$(date '+%A, ')</span><span color='##65859400'>$(date '+%d %B')</span>\"";
+          text = "cmd[update:1000] echo \"<span color='##c5c9c700'>$(date '+%A, ')</span><span color='##c093ee00'>$(date '+%d %B')</span>\"";
           font_size = 30;
           font_family = "Mononoki Nerd Font Mono";
           position = "0, -80";

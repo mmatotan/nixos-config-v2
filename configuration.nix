@@ -1,6 +1,8 @@
 { config, pkgs, nixpkgs-unstable, ... }:
 
 {
+  nixpkgs.config.allowUnfree = true;
+
   imports =
     [
       ./hardware-configuration.nix
@@ -34,30 +36,19 @@
     isNormalUser = true;
     description = "Marko Matotan";
     extraGroups = [ "networkmanager" "wheel" "audio" "video" ];
-    packages = with pkgs; [];
   };
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   environment.systemPackages = with pkgs; [
-    firefox
-    hyprpaper
-    alacritty
-    wget
-    htop
-    wlogout
-    hyprlock
-    dunst
-    rofi
     pipewire
     wireplumber
     gcc
     gnumake
-    highlight
     file
-    ranger
-    nodejs
     wl-clipboard
+    wget
+    htop
   ];
 
   fonts.packages = with pkgs; [
@@ -81,16 +72,19 @@
 
   programs.hyprland.enable = true;
 
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        user = "marko";
-	command = "${pkgs.hyprland}/bin/Hyprland";
-      };
-    };
-  };
+  services.displayManager.ly.enable = true;
 
   security.sudo.enable = true;
   system.stateVersion = "25.05";
+
+  hardware = {
+    graphics = {
+      enable = true;
+        enable32Bit = true;
+    };
+    amdgpu.amdvlk = {
+      enable = true;
+        support32Bit.enable = true;
+    };
+  };
 }
